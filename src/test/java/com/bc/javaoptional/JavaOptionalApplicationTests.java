@@ -5,8 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class JavaOptionalApplicationTests {
@@ -60,5 +59,12 @@ class JavaOptionalApplicationTests {
 //      Com optional
         Optional<String> opt = Optional.ofNullable("Test");
         opt.ifPresent(s -> System.out.println(s.length()));
+    }
+
+    @Test
+    public void whenOrElseWorks_thenCorrect() {
+        String nullName = null;
+        String name = Optional.ofNullable(nullName).orElse("Kratos");
+        assertEquals("Kratos", name);
     }
 }
