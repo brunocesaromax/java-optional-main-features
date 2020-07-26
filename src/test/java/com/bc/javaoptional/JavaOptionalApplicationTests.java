@@ -47,4 +47,18 @@ class JavaOptionalApplicationTests {
         opt = Optional.ofNullable(null);
         assertFalse(opt.isPresent());
     }
+
+    @Test
+    public void givenOptional_whenIfPresentWorks_thenCorrect() {
+//        Sem optional
+//        String name = "Test";
+//
+//        if (name != null){
+//            System.out.println(name.length());
+//        }
+
+//      Com optional
+        Optional<String> opt = Optional.ofNullable("Test");
+        opt.ifPresent(s -> System.out.println(s.length()));
+    }
 }
