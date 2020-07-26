@@ -26,7 +26,7 @@ class JavaOptionalApplicationTests {
         assertTrue(opt.isPresent());
     }
 
-//  Quando se espera valores nulos pode-se usar o Nullable em vez de of
+    //  Quando se espera valores nulos pode-se usar o Nullable em vez de of
     @Test
     public void givenNonNull_whenCreatesNullable_thenCorrect() {
         String name = "Test";
@@ -191,12 +191,34 @@ class JavaOptionalApplicationTests {
         assertTrue(correctPassword);
     }
 
+    @Test
+    public void givenOptional_whenFlatMapWorks_thenCorrect2() {
+        Person person = new Person("Kratos", 26);
+        Optional<Person> personOptional = Optional.of(person);
+
+        Optional<Optional<String>> nameOptionalWrapper
+                = personOptional.map(Person::getName);
+        Optional<String> nameOptional
+                = nameOptionalWrapper.orElseThrow(IllegalArgumentException::new);
+        String name1 = nameOptional.orElse("");
+        assertEquals("Kratos", name1);
+
+        String name = personOptional
+                .flatMap(Person::getName)
+                .orElse("");
+        assertEquals("Kratos", name);
+    }
+
     public String getMyDefault() {
         System.out.println("Getting Default Value");
         return "Default Value";
     }
 
-    private class Modem {
+    /*************************************************
+     * CLASSES AND METHODS AUXILIARIES
+     * ***********************************************/
+
+    private static class Modem {
         private Double price;
 
         public Modem(Double price) {
@@ -226,5 +248,29 @@ class JavaOptionalApplicationTests {
                 .filter(p -> p >= 10)
                 .filter(p -> p <= 15)
                 .isPresent();
+    }
+
+    private static class Person {
+        private String name;
+        private int age;
+        private String password;
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public Optional<String> getName() {
+            return Optional.ofNullable(name);
+        }
+
+        public Optional<Integer> getAge() {
+            return Optional.ofNullable(age);
+        }
+
+        public Optional<String> getPassword() {
+            return Optional.ofNullable(password);
+        }
+
     }
 }
