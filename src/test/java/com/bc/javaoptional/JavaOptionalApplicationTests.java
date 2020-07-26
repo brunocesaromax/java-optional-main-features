@@ -102,6 +102,13 @@ class JavaOptionalApplicationTests {
         assertEquals("Text present", defaultText);
     }
 
+    @Test
+    public void whenOrElseThrowWorks_thenCorrect() {
+        String nullName = null;
+        assertThrows(IllegalArgumentException.class, () -> Optional.ofNullable(nullName).orElseThrow(
+                IllegalArgumentException::new));
+    }
+
     public String getMyDefault() {
         System.out.println("Getting Default Value");
         return "Default Value";
