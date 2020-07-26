@@ -67,4 +67,43 @@ class JavaOptionalApplicationTests {
         String name = Optional.ofNullable(nullName).orElse("Kratos");
         assertEquals("Kratos", name);
     }
+
+    @Test
+    public void whenOrElseGetWorks_thenCorrect() {
+        String nullName = null;
+        String name = Optional.ofNullable(nullName).orElseGet(() -> "Kratos");
+        assertEquals("Kratos", name);
+    }
+
+    @Test
+    public void whenOrElseGetAndOrElseOverlap_thenCorrect() {
+        String text = null;
+
+        String defaultText = Optional.ofNullable(text).orElseGet(this::getMyDefault);
+        assertEquals("Default Value", defaultText);
+
+        defaultText = Optional.ofNullable(text).orElse(getMyDefault());
+        assertEquals("Default Value", defaultText);
+    }
+
+    @Test
+    public void whenOrElseGetAndOrElseDiffer_thenCorrect() {
+        String text = "Text present";
+
+        System.out.println("Using orElseGet:");
+        String defaultText
+                = Optional.ofNullable(text).orElseGet(this::getMyDefault);
+        assertEquals("Text present", defaultText);
+
+        System.out.println("Using orElse:");
+        //Método orElse é chamado se text for null ou não,
+        //logo o método orElseGet é mais otimizado
+        defaultText = Optional.ofNullable(text).orElse(getMyDefault());
+        assertEquals("Text present", defaultText);
+    }
+
+    public String getMyDefault() {
+        System.out.println("Getting Default Value");
+        return "Default Value";
+    }
 }
