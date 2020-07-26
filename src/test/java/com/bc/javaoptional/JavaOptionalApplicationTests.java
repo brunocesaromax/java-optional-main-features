@@ -3,6 +3,7 @@ package com.bc.javaoptional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,6 +108,19 @@ class JavaOptionalApplicationTests {
         String nullName = null;
         assertThrows(IllegalArgumentException.class, () -> Optional.ofNullable(nullName).orElseThrow(
                 IllegalArgumentException::new));
+    }
+
+    @Test
+    public void givenOptional_whenGetsValue_thenCorrect() {
+        Optional<String> opt = Optional.of("Test");
+        String name = opt.get();
+        assertEquals("Test", name);
+    }
+
+    @Test
+    public void givenOptionalWithNull_whenGetThrowsException_thenCorrect() {
+        Optional<String> opt = Optional.ofNullable(null);
+        assertThrows(NoSuchElementException.class, () -> opt.get());
     }
 
     public String getMyDefault() {
