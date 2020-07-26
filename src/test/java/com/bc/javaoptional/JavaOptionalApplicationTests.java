@@ -38,4 +38,13 @@ class JavaOptionalApplicationTests {
         Optional<String> opt = Optional.ofNullable(name);
         assertFalse(opt.isPresent());
     }
+
+    @Test
+    public void givenOptional_whenIsPresentWorks_thenCorrect() {
+        Optional<String> opt = Optional.of("Test");
+        assertTrue(opt.isPresent());
+
+        opt = Optional.ofNullable(null);
+        assertFalse(opt.isPresent());
+    }
 }
