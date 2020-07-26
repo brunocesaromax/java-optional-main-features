@@ -23,4 +23,19 @@ class JavaOptionalApplicationTests {
         Optional<String> opt = Optional.of(name);
         assertTrue(opt.isPresent());
     }
+
+//  Quando se espera valores nulos pode-se usar o Nullable em vez de of
+    @Test
+    public void givenNonNull_whenCreatesNullable_thenCorrect() {
+        String name = "Test";
+        Optional<String> opt = Optional.ofNullable(name);
+        assertTrue(opt.isPresent());
+    }
+
+    @Test
+    public void givenNull_whenCreatesNullable_thenCorrect() {
+        String name = null;
+        Optional<String> opt = Optional.ofNullable(name);
+        assertFalse(opt.isPresent());
+    }
 }
